@@ -1,0 +1,92 @@
+{% extends 'first_app\layout.html' %}
+{%load static%}
+
+
+{% block title %}Home{%endblock%}
+
+{%block body%}
+<!-- User is patient -->
+{% if status == 'patient' %}
+<div class = "doctors">
+    {% for specialist in doctor_specialists %}
+    <div>
+    <h1>{{specialist.specialist}} <span class = "sum">{{specialist.sum}}</span></h1>
+    {% for doctor in doctors%}
+        {% if doctor.specialist == specialist.specialist %}
+        <div style = "display: flex; flex-direction:column">
+            <div class = "doctor" data-id = "{{doctor.id}}">
+                <a class = "name_h1" href = "{% url 'profile' 'doctor' doctor.user.id %}" style = "border:none;">{{doctor.user.username}}</a>
+                <p>{{doctor.specialist}}</p>
+                <p>{{doctor.user.gender}}</p>
+                <p class = "likes">{{doctor.likes}}</p>
+                <div>
+                    <button class = "like button" data-id = "{{doctor.id}}">like</button>
+                    <button class = "add button" data-id = "{{doctor.id}}">Add</button>
+                    <button class = "show button">Show</button>
+                </div>
+            </div>
+            <div class = "doctor_info" >
+                <a class = "name_h1" href = "{% url 'profile' 'doctor' doctor.user.id %}" >{{doctor.user.username}}</a>
+                <div style = "display: flex; justify-content: space-between;">
+                    <div>
+                    <h2 style = "margin-left:10px">Details:</h2>
+                    <div class = "info"><img src = "https://cdn-icons-png.flaticon.com/128/542/542689.png" class ="icon_info"><span>{{doctor.user.email}}</span></div>
+                    <div class = "info"><img src = "https://cdn-icons-png.flaticon.com/128/15/15874.png" class ="icon_info"><span>{{doctor.user.phonenumber}}</span></div>
+                    <div class = "info"><img src = "https://cdn-icons-png.flaticon.com/128/126/126473.png" class ="icon_info"><span class = "likes">{{doctor.likes}}</span></div>
+                   
+                    </div>
+                    <div style = "margin:30px;">
+                        <img class = "profile_image" src = "{{doctor.user.photo.url}}" style = "margin:30px;">
+                    </div>
+            </div>
+            </div>
+        </div>
+        {%endif%}
+    {%endfor%}
+
+    </div>
+    {%empty%}
+    <h1>No doctors</h1>
+    {%endfor%}
+</div>
+{% endif %}
+
+
+
+
+
+
+
+<!-- User is doctor -->
+
+{% if status == 'doctor' %}
+    <div id = "patients">
+        {% for patient in patients%}
+            <div class = "patient">
+                <div style = "display: flex; align-items: center;">
+                    <img src="{{patient.patient.user.photo.url}}" class = "pending_patient_photo">
+                    <a href = "{% url 'profile' 'patient' patient.patient.user.id %}" class = "profile_link">{{patient.patient.user.username}}</a>
+                </div>
+                <div>
+                    <form action ="{% url 'remove' %}" method = "post" >
+                        {%csrf_token%}
+                    <button type = "submit" name = "id" value = "{{patient.patient.id}}" class = "delete">remove</button>
+                </form>
+                </div>
+            </div>
+        {%empty%}
+            <h1 style="text-align: center; border-bottom:1px black solid; padding: 10px;;">You don't have patients yet</h1>
+        {%endfor%}
+    </div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

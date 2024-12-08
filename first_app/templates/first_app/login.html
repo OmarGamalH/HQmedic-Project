@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src = "{% static 'first_app/Script.js' %}"></script>
+    <link href = "{% static 'first_app/style.css' %}" rel = "stylesheet">
+    <title>HQmedic | Login </title>
+</head>
+<body id = "login_body">
+    <!-- navbar -->
+   <div id = "navbar" class = "navbar">
+    <img src = "https://cdn-icons-png.flaticon.com/128/687/687529.png" class = "icon">
+    <button id = "change_user" class = "button">Change Category</button>
+   </div>
+   <!-- 3 boxes -->
+   <div id = "categories" class = "centering">
+    <div class = "category" id = "doctor">
+        <img src = "https://cdn-icons-png.flaticon.com/128/3481/3481061.png" class = "start_icon">
+        <h3 class = "login_h3">Doctor</h3>
+    </div>
+    <div class = "category" id = "patient">
+        <img src = "https://cdn-icons-png.flaticon.com/128/2869/2869780.png" class = "start_icon">
+        <h3 class = "login_h3">Patient</h3>
+    </div>
+   </div>
+   <!-- patient login -->
+   <div id = "patient_login" class = "centering">
+    <h2 style = "text-align: center; color:green;">Login as Patient</h2>
+    <h3 class = "error">{{patient_login_error}}</h3>
+    <form action = "{% url 'login_patient' %}" method = "post" id = "patient_login_form">
+        {% csrf_token%}
+    {{login_form}}
+    <div class = "buttons">
+        <button class = "button" type = "submit" id = "patient_login_login_button">Login</button>
+        <button class = "button" type = "button" id = "patient_login_register_button">Register</button>
+    </div>
+</form>
+   </div>
+   <div id = "patient_register" class = "centering">
+    <h2 style = "text-align: center; color:green">Register as Patient</h2>
+    <h3 class = "error">{{patient_register_error}}</h3>
+    <div>
+        <h4>have you registered as doctor ?</h4>
+       <select id = "register_select">
+        <option selected disabled>Not Selected</option>
+        <option class = "option">Yes</option>
+        <option class = "option">No</option>
+       </select>
+    </div>
+    <form action = "{% url 'patient_register' %}" method = "post" id = "patient_register_form">
+        {% csrf_token %}
+        {{register_form}}
+        <div class =  "buttons">
+            <button class = "button" type = "submit" id = "patient_register_register_button">Register</button>
+            <button class = "button" type = "button" id = "patient_register_login_button">login</button>
+        </div>
+    </form>
+</div>
+
+
+    <div id = "doctor_login" class = "centering doctor_style">
+        <h2 style = "text-align: center; color:blue">Login as Doctor</h2>
+        <h3 class = "error">{{doctor_login_error}}</h3>
+        <form action = "{% url 'login_doctor' %}" method = "post" id = "doctor_login_form">
+            {% csrf_token%}
+        {{doctor_l_form}}
+        <div class = "buttons">
+            <button class = "button" type = "submit" id = "doctor_login_login_button">Login</button>
+            <button class = "button" type = "button" id = "doctor_login_register_button">Register</button>
+        </div>
+        </form>
+    </div>
+    <div id = "doctor_register" class = "centering doctor_style">
+        <h2 style = "text-align: center; color:blue">Register as doctor</h2>
+        <h3 class = "error">{{doctor_register_error}}</h3>
+        <div>
+            <h4>have you registered as patient ?</h4>
+           <select id = "doctor_register_select">
+            <option selected disabled>Not Selected</option>
+            <option class = "option">Yes</option>
+            <option class = "option">No</option>
+           </select>
+        </div>
+        <form action = "{% url 'doctor_register' %}" method = "post" id = "doctor_register_form">
+            {% csrf_token %}
+            {{doctor_r_form}}
+            <div class =  "buttons">
+                <button class = "button" type = "submit" id = "doctor_register_register_button">Register</button>
+                <button class = "button" type = "button" id = "doctor_register_login_button">login</button>
+            </div>
+        </form>
+
+    </div>
+    
+
+
+
+
+
+
+    
+</body>

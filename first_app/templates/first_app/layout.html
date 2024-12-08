@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href = "{% static 'first_app/style.css' %}" rel = "stylesheet">
+    <script src = "{% static 'first_app/Script2.js' %}"></script>
+    <title>HQmedic | {% block title %}{%endblock%}</title>
+</head>
+<body id = "index_body">
+    <div id = "index_navbar" class = "navbar"  >
+        <img src = "https://cdn-icons-png.flaticon.com/128/687/687529.png" class = "icon">
+        <div>
+            <a class = "button" href = "{%url 'index' %}" style = "text-decoration:none">Home</a>
+            <button class = "button" id = "menu_button">&#9776 Menu</button>
+        </div>
+        
+    </div>
+    <div id = "menu">
+    <div id = "menu_buttons">
+    <a href = "{% url 'advices' %}">Advices</a>
+    {% if status == 'patient' %}
+    <button class = "button" id = "my_doctors" style = "width:100%;margin:0px;">My Doctors</button>
+   {% endif %}
+   {% if status == 'doctor' %}
+   <a href = "{% url 'pending' %}">Pending</a>
+
+  {% endif %}
+  
+   </div>
+   <div style = "display: flex; flex-direction:column">
+    {%if status == 'patient' %}
+   <a href = "{% url 'profile' 'patient' user.id %}">Profile</a>
+   <a href = "{% url 'pending'%}">Pending</a>
+   {%endif%}
+   {%if status == 'doctor' %}
+   <a href = "{% url 'profile' 'doctor' user.id %}">Profile</a>
+   
+   {%endif%}
+   <a href = "{% url 'logout' %}">Logout</a>
+</div>
+    </div>
+
+    {% block body%}{%endblock%}
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'first_app/layout.html' %} 
+{%load static%} 
+
+
+{% block title %}Pending requests{%endblock%} 
+
+
+
+{% block body %} 
+
+{% if status == "doctor"%}
+  <div id = "pending_patients">
+    {% for patient in pending_patients %}
+    <div class = "pending_patient">
+      <div style = "display: flex; align-items: center;">
+      <img src="{{patient.patient.user.photo.url}}" class = "pending_patient_photo">
+      <a href = "{% url 'profile' 'patient' patient.patient.user.id %}" class = "profile_link">{{patient.patient.user.username}}</a>
+    </div>
+    <div>
+      <form method = "post" action = "{% url 'confirm' %}">
+        {% csrf_token %}
+      <button class = "button" type = "submit" name = "confirm" value = "{{patient.patient.id}}">Confirm</button>
+      <button class = "delete" type = "submit" name = "delete" value = "{{patient.patient.id}}">Delete</button>
+    </form>
+      
+    </div>
+    </div>
+    {%endfor%}
+  </div>
+{%endif%}
+{% if status == "patient"%}
+<div class = "doctors"></div>
+  <div id = "pending_doctors">
+    {%for doctor in pending_doctors%}
+      <div class = "pending_doctor">
+        <div style = "display: flex; align-items: center;">
+          <img src="{{doctor.user.photo.url}}" class = "pending_patient_photo">
+          <a href = "{% url 'profile' 'doctor' doctor.user.id %}" class = "profile_link">{{doctor.user.username}}</a>
+        </div>
+        <div>
+          <button class = "add button" data-id = "{{doctor.id}}">Add</button>
+      </div>
+      </div>
+    {%endfor%}
+  </div>
+{%endif%}
+
+
+{%endblock%}

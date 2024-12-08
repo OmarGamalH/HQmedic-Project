@@ -1,0 +1,42 @@
+{% extends 'first_app/layout.html' %}
+{% load static %}
+
+{%block title%}Advices{%endblock%}
+
+
+
+{%block body%}
+{% if status == 'patient' %}
+    <div class = "doctors"></div>
+{%endif%}
+<div id = "all_advices">
+{% if status == 'doctor' %}
+    <div id = "add_advice_div">
+        <div id ="add_advice" >
+            <h1>Do you have new medical advice , {{user.username}} ?</h1>
+            <h2 class = "error"></h2>
+            <textarea id = "add_advice_textarea" placehoder = "Advice" data-id = "{{doctor_info.id}}"></textarea>
+            <div style = "display: flex; justify-content:right">
+            <button class = "button" id = "add_advice_button">Add advice</button>
+        </div>
+    </div>
+{% endif %}
+<div id = "advices">
+    {% for advice in advices %}
+        <div class = "advice">
+            <div style = "display: flex; justify-content:space-between; align-items:center">
+                <div class = "info">
+                <img src = "{{advice.doctor.user.photo.url}}" class = "profile_icon">
+                <a class = "profile_link" href = "{% url 'profile' 'doctor' advice.doctor.user.id %}">{{advice.doctor.user.username}}</a>
+                </div>
+                <span class = "specialist">{{advice.doctor.specialist}}</span>
+            </div>
+            <textarea readonly class = "advice_textarea" >{{advice.advice}}</textarea>
+            <div style = "display: flex; justify-content:right; color:gray ; margin:10px;">Created: {{advice.date}}</div>
+        </div>
+    {% empty %}
+    <h1 class = "empty">No advices yet</h1>
+    {%endfor%}
+</div>
+</div>
+{%endblock%}
