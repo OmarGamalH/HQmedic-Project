@@ -143,17 +143,6 @@ python manage.py runserver
 
 Open **http://127.0.0.1:8000/** in your browser.
 
-> **Configuration notes:** the project is already wired up in `HQmedic/settings.py` with:
->
-> - a **custom user model** — `AUTH_USER_MODEL = "first_app.User"`
-> - an **email-based authentication backend** — `first_app.backends.Email_type`
-> - **uploaded media** stored in `first_app/profile_images/` and served under `/media/`
-> - `LOGIN_URL = "/login"` for protected pages
->
-> The `first_app/profile_images/` folder must contain a `default.png` image, which is used as the fallback profile photo.
->
-> ⚠️ The bundled settings are intended for **local development only** (`DEBUG = True`, `ALLOWED_HOSTS = ["*"]`, and a development `SECRET_KEY`). See the [Roadmap](#-roadmap) before deploying.
-
 ## 🧭 Usage Walkthrough
 
 1. **Choose a category** on the entry page — *Doctor* or *Patient* — then log in or register.
